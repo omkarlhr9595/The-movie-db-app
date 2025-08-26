@@ -11,27 +11,27 @@ class SearchInitial extends SearchState {
 }
 
 class SearchLoading extends SearchState {
-  final String query;
   const SearchLoading(this.query);
+  final String query;
   @override
   List<Object?> get props => <Object?>[query];
 }
 
 class SearchFailure extends SearchState {
+  const SearchFailure({required this.query, required this.message});
   final String query;
   final String message;
-  const SearchFailure({required this.query, required this.message});
   @override
   List<Object?> get props => <Object?>[query, message];
 }
 
 class SearchSuccess extends SearchState {
+  const SearchSuccess({required this.query, required this.movies, required this.page, required this.hasReachedMax, this.isLoadingMore = false});
   final String query;
   final List<Movie> movies;
   final int page;
   final bool hasReachedMax;
   final bool isLoadingMore;
-  const SearchSuccess({required this.query, required this.movies, required this.page, required this.hasReachedMax, this.isLoadingMore = false});
 
   SearchSuccess copyWith({
     List<Movie>? movies,

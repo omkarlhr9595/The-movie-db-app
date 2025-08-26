@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
-import '../bloc/trending_bloc.dart';
-import '../widgets/movie_card.dart';
-import '../widgets/time_window_segmented.dart';
-import '../../../search_movies/presentation/bloc/search_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:the_movie_app/features/search_movies/presentation/bloc/search_bloc.dart';
+import 'package:the_movie_app/features/trending_movies/presentation/bloc/trending_bloc.dart';
+import 'package:the_movie_app/features/trending_movies/presentation/widgets/movie_card.dart';
+import 'package:the_movie_app/features/trending_movies/presentation/widgets/time_window_segmented.dart';
+import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class TrendingScreen extends StatefulWidget {
   const TrendingScreen({super.key});
@@ -41,14 +41,12 @@ class _TrendingScreenState extends State<TrendingScreen> {
         builder: (BuildContext context, TrendingState state) {
           return RefreshIndicator(
             onRefresh: () async {
-              final String q = _searchController.text.trim();
+              final q = _searchController.text.trim();
               if (q.isEmpty) {
-                final TrendingBloc bloc = context.read<TrendingBloc>();
-                bloc.add(const TrendingRequestedEvent());
+                final bloc = context.read<TrendingBloc>()..add(const TrendingRequestedEvent());
                 await bloc.stream.firstWhere((TrendingState s) => s is! TrendingLoadingState);
               } else {
-                final SearchBloc sbloc = context.read<SearchBloc>();
-                sbloc.add(SearchRequested(q));
+                final sbloc = context.read<SearchBloc>()..add(SearchRequested(q));
                 await sbloc.stream.firstWhere((SearchState s) => s is! SearchLoading);
               }
             },
@@ -77,7 +75,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                               onChanged: (String value) {
                                 _searchDebounce?.cancel();
                                 _searchDebounce = Timer(const Duration(milliseconds: 400), () {
-                                  final String q = value.trim();
+                                  final q = value.trim();
                                   if (q.isEmpty) {
                                     context.read<SearchBloc>().add(const SearchCleared());
                                   } else {
@@ -149,7 +147,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: BlocBuilder<SearchBloc, SearchState>(
                           builder: (BuildContext context, SearchState s) {
-                            final String q = _searchController.text.trim();
+                            final q = _searchController.text.trim();
                             if (q.isEmpty) {
                               return Scrollbar(
                                 controller: _scrollController,
@@ -167,8 +165,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                   scrollController: _scrollController,
                                   padding: EdgeInsets.zero,
                                   itemBuilder: (BuildContext context, int rowIndex) {
-                                    final int leftIndex = rowIndex * 2;
-                                    final int rightIndex = leftIndex + 1;
+                                    final leftIndex = rowIndex * 2;
+                                    final rightIndex = leftIndex + 1;
                                     return Row(
                                       children: <Widget>[
                                         Expanded(
@@ -225,8 +223,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
                                   scrollController: _scrollController,
                                   padding: EdgeInsets.zero,
                                   itemBuilder: (BuildContext context, int rowIndex) {
-                                    final int leftIndex = rowIndex * 2;
-                                    final int rightIndex = leftIndex + 1;
+                                    final leftIndex = rowIndex * 2;
+                                    final rightIndex = leftIndex + 1;
                                     return Row(
                                       children: <Widget>[
                                         Expanded(

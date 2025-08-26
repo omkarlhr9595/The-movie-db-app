@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'injection_container.dart';
-import 'app.dart';
+import 'package:the_movie_app/app.dart';
+import 'package:the_movie_app/injection_container.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +10,9 @@ Future<void> main() async {
   runApp(const MainApp());
 }
 
+/// Main app widget
 class MainApp extends StatelessWidget {
+  /// Constructor for the MainApp widget
   const MainApp({super.key});
 
   @override

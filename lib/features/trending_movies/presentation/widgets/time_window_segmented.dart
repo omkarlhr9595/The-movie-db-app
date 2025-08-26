@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/repositories/trending_repository.dart';
-import '../bloc/trending_bloc.dart';
+import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
+import 'package:the_movie_app/features/trending_movies/presentation/bloc/trending_bloc.dart';
 
 class TimeWindowSegmented extends StatelessWidget {
   const TimeWindowSegmented({super.key});
@@ -38,7 +38,7 @@ class TimeWindowSegmented extends StatelessWidget {
           ),
           onSelectionChanged: (Set<TimeWindow> set) {
             if (set.isEmpty) return;
-            final TimeWindow choice = set.first;
+            final choice = set.first;
             if (choice == selected) return;
             trandingBloc.add(TrendingTimeWindowChangedEvent(choice));
           },

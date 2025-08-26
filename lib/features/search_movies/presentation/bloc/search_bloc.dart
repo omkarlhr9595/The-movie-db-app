@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../trending_movies/domain/entities/movie.dart';
-import '../../domain/usecases/search_movies.dart';
+import 'package:the_movie_app/features/search_movies/domain/usecases/search_movies.dart';
+import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';
@@ -22,7 +21,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Future<void> _onQueryChanged(SearchQueryChanged event, Emitter<SearchState> emit) async {
-    final String query = event.query.trim();
+    final query = event.query.trim();
     if (query.isEmpty) {
       emit(const SearchInitial());
       return;
@@ -53,26 +52,26 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       result.when(
         success: (movies) {
           // Combine movies and remove duplicates to prevent Hero tag conflicts
-          final Map<int, Movie> uniqueMovies = <int, Movie>{};
+          final uniqueMovies = <int, Movie>{};
           
           // Add current movies first (preserving order)
-          for (final Movie movie in current.movies) {
+          for (final movie in current.movies) {
             uniqueMovies[movie.id] = movie;
           }
           
           // Add new movies (newer ones will override if same ID)
-          for (final Movie movie in movies) {
+          for (final movie in movies) {
             uniqueMovies[movie.id] = movie;
           }
           
-          final List<Movie> combined = uniqueMovies.values.toList(growable: false);
+          final combined = uniqueMovies.values.toList(growable: false);
           
           emit(current.copyWith(
             movies: combined,
             page: nextPage,
             hasReachedMax: movies.isEmpty,
             isLoadingMore: false,
-          ));
+          ),);
         },
         failure: (_) => emit(current.copyWith(isLoadingMore: false)),
       );

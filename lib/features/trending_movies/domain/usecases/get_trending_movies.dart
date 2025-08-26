@@ -1,20 +1,20 @@
-import '../../../../core/result/result.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../entities/movie.dart';
-import '../repositories/trending_repository.dart';
+import 'package:the_movie_app/core/result/result.dart';
+import 'package:the_movie_app/core/usecases/usecase.dart';
+import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
+import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
 
 class GetTrendingMoviesParams {
+
+  const GetTrendingMoviesParams({required this.timeWindow, required this.page, this.forceRefresh = false});
   final TimeWindow timeWindow;
   final int page;
   final bool forceRefresh;
-
-  const GetTrendingMoviesParams({required this.timeWindow, required this.page, this.forceRefresh = false});
 }
 
 class GetTrendingMoviesUseCase implements UseCase<Result<List<Movie>>, GetTrendingMoviesParams> {
-  final TrendingRepository repository;
 
   GetTrendingMoviesUseCase(this.repository);
+  final TrendingRepository repository;
 
   @override
   Future<Result<List<Movie>>> call(GetTrendingMoviesParams params) {

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../domain/entities/movie.dart';
+import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
 
 part 'movie_model.g.dart';
 
@@ -15,6 +15,8 @@ class MovieModel {
     this.releaseDate,
     this.voteAverage,
   });
+
+  factory MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
 
   @JsonKey(name: 'id')
   final int id;
@@ -37,12 +39,9 @@ class MovieModel {
   @JsonKey(name: 'vote_average')
   final double? voteAverage;
 
-  factory MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
+  static Object? _readTitle(Map<dynamic, dynamic> json, String key) => (json['title'] ?? json['name'] ?? '').toString();
 
-  static Object? _readTitle(Map json, String key) => (json['title'] ?? json['name'] ?? '').toString();
-
-  static Object? _readReleaseDate(Map json, String key) =>
-      (json['release_date'] ?? json['first_air_date'])?.toString();
+  static Object? _readReleaseDate(Map<dynamic, dynamic> json, String key) => (json['release_date'] ?? json['first_air_date'])?.toString();
 
   Movie toEntity() => Movie(
         id: id,
@@ -54,4 +53,3 @@ class MovieModel {
         voteAverage: voteAverage,
       );
 }
-

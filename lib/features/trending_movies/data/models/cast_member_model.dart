@@ -1,4 +1,4 @@
-import '../../domain/entities/cast_member.dart';
+import 'package:the_movie_app/features/trending_movies/domain/entities/cast_member.dart';
 
 class CastMemberModel {
   const CastMemberModel({
@@ -8,11 +8,6 @@ class CastMemberModel {
     this.profilePath,
   });
 
-  final int id;
-  final String name;
-  final String character;
-  final String? profilePath;
-
   factory CastMemberModel.fromJson(Map<String, dynamic> json) {
     return CastMemberModel(
       id: (json['id'] as num?)?.toInt() ?? 0,
@@ -21,6 +16,11 @@ class CastMemberModel {
       profilePath: json['profile_path']?.toString(),
     );
   }
+
+  final int id;
+  final String name;
+  final String character;
+  final String? profilePath;
 
   CastMember toEntity() => CastMember(id: id, name: name, character: character, profilePath: profilePath);
 }

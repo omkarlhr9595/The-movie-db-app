@@ -1,4 +1,4 @@
-import '../error/failures.dart';
+import 'package:the_movie_app/core/error/failures.dart';
 
 abstract class Result<T> {
   const Result();
@@ -6,7 +6,7 @@ abstract class Result<T> {
   bool get isFailure => this is FailureResult<T>;
 
   R when<R>({required R Function(T data) success, required R Function(Failure failure) failure}) {
-    final Result<T> self = this;
+    final self = this;
     if (self is Success<T>) return success(self.data);
     if (self is FailureResult<T>) return failure(self.failure);
     throw StateError('Unhandled Result subtype');
@@ -22,4 +22,3 @@ class FailureResult<T> extends Result<T> {
   const FailureResult(this.failure);
   final Failure failure;
 }
-
