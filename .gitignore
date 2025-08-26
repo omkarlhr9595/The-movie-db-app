@@ -50,4 +50,8 @@ GoogleService-Info.plist
 firebase_options.dart
 firebase.json
 
+# Keystore files
+*.jks
+key.properties
+
 .env
