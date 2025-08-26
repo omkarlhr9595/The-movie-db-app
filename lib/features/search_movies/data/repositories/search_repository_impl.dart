@@ -1,11 +1,11 @@
-import '../../../../core/error/exceptions.dart';
-import '../../../../core/error/failures.dart';
-import '../../../../core/result/result.dart';
-import '../../../trending_movies/data/models/movie_model.dart';
-import '../../../trending_movies/domain/entities/movie.dart';
-import '../../domain/repositories/search_repository.dart';
-import '../datasources/local/search_local_data_source.dart';
-import '../datasources/remote/search_remote_data_source.dart';
+import 'package:cine_parker/core/error/exceptions.dart';
+import 'package:cine_parker/core/error/failures.dart';
+import 'package:cine_parker/core/result/result.dart';
+import 'package:cine_parker/features/search_movies/data/datasources/local/search_local_data_source.dart';
+import 'package:cine_parker/features/search_movies/data/datasources/remote/search_remote_data_source.dart';
+import 'package:cine_parker/features/search_movies/domain/repositories/search_repository.dart';
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
   SearchRepositoryImpl(this.remote, this.local);
@@ -16,16 +16,16 @@ class SearchRepositoryImpl implements SearchRepository {
   @override
   Future<Result<List<Movie>>> searchMovies({required String query, required int page, bool forceRefresh = false}) async {
     try {
-      final List<MovieModel>? cached = forceRefresh ? null : await local.getCachedSearchResults(query, page);
-      final List<MovieModel> models = cached ?? await remote.searchMovies(query: query, page: page);
-      final List<Movie> movies = models.map((MovieModel m) => m.toEntity()).toList(growable: false);
+      final cached = forceRefresh ? null : await local.getCachedSearchResults(query, page);
+      final models = cached ?? await remote.searchMovies(query: query, page: page);
+      final movies = models.map((MovieModel m) => m.toEntity()).toList(growable: false);
       
       // Remove duplicates based on movie ID to prevent Hero tag conflicts
-      final Map<int, Movie> uniqueMovies = <int, Movie>{};
-      for (final Movie movie in movies) {
+      final uniqueMovies = <int, Movie>{};
+      for (final movie in movies) {
         uniqueMovies[movie.id] = movie;
       }
-      final List<Movie> deduplicatedMovies = uniqueMovies.values.toList(growable: false);
+      final deduplicatedMovies = uniqueMovies.values.toList(growable: false);
       
       return Success<List<Movie>>(deduplicatedMovies);
     } on ServerException catch (e) {

@@ -1,42 +1,51 @@
+import 'package:cine_parker/core/error/exceptions.dart';
+import 'package:cine_parker/core/network/dio_client.dart';
+import 'package:cine_parker/features/trending_movies/data/datasources/local/trending_local_data_source.dart';
+import 'package:cine_parker/features/trending_movies/data/models/cast_member_model.dart';
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
 import 'package:dio/dio.dart';
 
-import '../../../../../core/error/exceptions.dart';
-import '../../../../../core/network/dio_client.dart';
-import '../../../domain/repositories/trending_repository.dart';
-import '../../models/movie_model.dart';
-import '../../models/cast_member_model.dart';
-import '../local/trending_local_data_source.dart';
-
+/// Abstract class for the trending remote data source
 abstract class TrendingRemoteDataSource {
+  /// Get trending movies
   Future<List<MovieModel>> getTrendingMovies(
     TimeWindow timeWindow, {
     required int page,
   });
+
+  /// Get movie cast
   Future<List<CastMemberModel>> getMovieCast(int movieId);
 }
 
+/// Implementation of the trending remote data source
 class TrendingRemoteDataSourceImpl implements TrendingRemoteDataSource {
+  /// Constructor for the TrendingRemoteDataSourceImpl
   TrendingRemoteDataSourceImpl(this._client, this._local);
 
+  /// Dio client
   final DioClient _client;
+
+  /// Trending local data source
   final TrendingLocalDataSource _local;
 
+  /// Get trending movies
   @override
   Future<List<MovieModel>> getTrendingMovies(
     TimeWindow timeWindow, {
     required int page,
   }) async {
-    final String path = '/trending/movie/${timeWindow == TimeWindow.day ? 'day' : 'week'}';
+    final path = '/trending/movie/${timeWindow == TimeWindow.day ? 'day' : 'week'}';
     try {
-      final Response<dynamic> response = await _client.dio.get(
+      final response = await _client.dio.get<Map<String, dynamic>>(
         path,
         queryParameters: <String, dynamic>{'page': page},
       );
       if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
-        final List<dynamic> results = (response.data as Map<String, dynamic>)['results'] as List<dynamic>? ?? <dynamic>[];
-        final List<Map<String, dynamic>> rawList = results.whereType<Map<String, dynamic>>().toList(growable: false);
+        final results = response.data!['results'] as List<dynamic>? ?? <dynamic>[];
+        final rawList = results.whereType<Map<String, dynamic>>().toList(growable: false);
         await _local.cacheTrendingMovies(timeWindow, page, rawList);
-        final List<MovieModel> models = rawList.map<MovieModel>((Map<String, dynamic> e) => MovieModel.fromJson(e)).toList(growable: false);
+        final models = rawList.map<MovieModel>(MovieModel.fromJson).toList(growable: false);
         return models;
       }
       throw ServerException(message: 'Unexpected response', statusCode: response.statusCode);
@@ -48,10 +57,10 @@ class TrendingRemoteDataSourceImpl implements TrendingRemoteDataSource {
   @override
   Future<List<CastMemberModel>> getMovieCast(int movieId) async {
     try {
-      final response = await _client.dio.get('/movie/$movieId/credits');
+      final response = await _client.dio.get<Map<String, dynamic>>('/movie/$movieId/credits');
       if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
-        final List<dynamic> results = (response.data as Map<String, dynamic>)['cast'] as List<dynamic>? ?? <dynamic>[];
-        return results.whereType<Map<String, dynamic>>().map<CastMemberModel>((e) => CastMemberModel.fromJson(e)).toList(growable: false);
+        final results = response.data!['cast'] as List<dynamic>? ?? <dynamic>[];
+        return results.whereType<Map<String, dynamic>>().map<CastMemberModel>(CastMemberModel.fromJson).toList(growable: false);
       }
       throw ServerException(message: 'Unexpected response', statusCode: response.statusCode);
     } on DioException catch (e) {

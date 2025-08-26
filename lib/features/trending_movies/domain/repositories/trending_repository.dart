@@ -1,6 +1,6 @@
-import '../../../../core/result/result.dart';
-import '../entities/cast_member.dart';
-import '../entities/movie.dart';
+import 'package:cine_parker/core/result/result.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/cast_member.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
 
 enum TimeWindow { day, week }
 

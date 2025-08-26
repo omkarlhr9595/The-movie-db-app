@@ -1,17 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cine_parker/features/search_movies/presentation/bloc/search_bloc.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/cast_cubit.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/trending_bloc.dart';
+import 'package:cine_parker/injection_container.dart';
+import 'package:cine_parker/router.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'features/trending_movies/presentation/bloc/trending_bloc.dart';
-import 'features/trending_movies/presentation/bloc/cast_cubit.dart';
-import 'router.dart';
-import 'injection_container.dart';
-import 'features/search_movies/presentation/bloc/search_bloc.dart';
-
+/// Main app widget
 class App extends StatelessWidget {
+  /// Constructor for the App widget
   const App({super.key});
 
+  /// Build method for the App widget
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -32,7 +34,6 @@ class App extends StatelessWidget {
             const fallbackSeed = Color(0xFF6750A4);
             lightScheme = ColorScheme.fromSeed(
               seedColor: fallbackSeed,
-              brightness: Brightness.light,
             );
             darkScheme = ColorScheme.fromSeed(
               seedColor: fallbackSeed,
@@ -40,7 +41,7 @@ class App extends StatelessWidget {
             );
           }
 
-          final router = AppRouter.create();
+          final router = AppRouter.router;
 
           return MaterialApp.router(
             theme: ThemeData(
@@ -63,7 +64,6 @@ class App extends StatelessWidget {
                 ).textTheme,
               ),
             ),
-            themeMode: ThemeMode.system,
             routerConfig: router,
           );
         },

@@ -5,4 +5,3 @@ abstract class UseCase<Output, Input> {
 class NoParams {
   const NoParams();
 }
-

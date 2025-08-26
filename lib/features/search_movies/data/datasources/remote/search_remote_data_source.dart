@@ -1,9 +1,8 @@
+import 'package:cine_parker/core/error/exceptions.dart';
+import 'package:cine_parker/core/network/dio_client.dart';
+import 'package:cine_parker/features/search_movies/data/datasources/local/search_local_data_source.dart';
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
 import 'package:dio/dio.dart';
-
-import '../../../../../core/error/exceptions.dart';
-import '../../../../../core/network/dio_client.dart';
-import '../../../../trending_movies/data/models/movie_model.dart';
-import '../local/search_local_data_source.dart';
 
 abstract class SearchRemoteDataSource {
   Future<List<MovieModel>> searchMovies({required String query, required int page});
@@ -17,9 +16,9 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
 
   @override
   Future<List<MovieModel>> searchMovies({required String query, required int page}) async {
-    const String path = '/search/movie';
+    const path = '/search/movie';
     try {
-      final Response<dynamic> response = await _client.dio.get(
+      final response = await _client.dio.get<Map<String, dynamic>>(
         path,
         queryParameters: <String, dynamic>{
           'query': query,
@@ -28,10 +27,10 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
         },
       );
       if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
-        final List<dynamic> results = (response.data as Map<String, dynamic>)['results'] as List<dynamic>? ?? <dynamic>[];
-        final List<Map<String, dynamic>> rawList = results.whereType<Map<String, dynamic>>().toList(growable: false);
+        final results = response.data!['results'] as List<dynamic>? ?? <dynamic>[];
+        final rawList = results.whereType<Map<String, dynamic>>().toList(growable: false);
         await _local.cacheSearchResults(query, page, rawList);
-        final List<MovieModel> models = rawList.map<MovieModel>((Map<String, dynamic> e) => MovieModel.fromJson(e)).toList(growable: false);
+        final models = rawList.map<MovieModel>(MovieModel.fromJson).toList(growable: false);
         return models;
       }
       throw ServerException(message: 'Unexpected response', statusCode: response.statusCode);

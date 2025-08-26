@@ -1,7 +1,6 @@
+import 'package:cine_parker/core/config/api_config.dart';
+import 'package:cine_parker/core/error/exceptions.dart';
 import 'package:dio/dio.dart';
-
-import '../config/api_config.dart';
-import '../error/exceptions.dart';
 
 class DioClient {
   DioClient() {
@@ -25,8 +24,8 @@ class DioClient {
   Dio get dio => _dio;
 
   Never throwAsServerException(DioException error) {
-    final int? status = error.response?.statusCode;
-    final String message = error.response?.data is Map<String, dynamic> ? (error.response?.data['status_message']?.toString() ?? error.message ?? 'Unknown server error') : (error.message ?? 'Unknown server error');
+    final status = error.response?.statusCode;
+    final message = error.response?.data is Map<String, dynamic> ? (error.response?.data as Map<String, dynamic>)['status_message']?.toString() ?? error.message ?? 'Unknown server error' : (error.message ?? 'Unknown server error');
     throw ServerException(message: message, statusCode: status);
   }
 }

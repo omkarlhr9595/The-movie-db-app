@@ -1,21 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
-import '../../../../core/config/api_config.dart';
-import '../../domain/entities/movie.dart';
+import 'package:cine_parker/core/config/api_config.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
+import 'package:cine_parker/features/trending_movies/presentation/screens/movie_details_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../screens/movie_details_screen.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({super.key, required this.movie});
+  const MovieCard({required this.movie, super.key});
 
   final Movie movie;
 
   @override
   Widget build(BuildContext context) {
-    final String? imageUrl = movie.posterPath == null ? null : (ApiConfig.imageBaseUrlW500 + movie.posterPath!);
+    final imageUrl = movie.posterPath == null ? null : (ApiConfig.imageBaseUrlW500 + movie.posterPath!);
     // Create a unique Hero tag using movie ID and a hash of the movie object to prevent conflicts
-    final String heroTag = 'poster_${movie.id}_${movie.hashCode}';
+    final heroTag = 'poster_${movie.id}_${movie.hashCode}';
     
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
@@ -50,7 +49,7 @@ class MovieCard extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment(0, 1),
+                      begin: Alignment.bottomCenter,
                       end: Alignment(0, -0.6),
                       colors: <Color>[Color(0xE6000000), Color(0x00000000)],
                     ),

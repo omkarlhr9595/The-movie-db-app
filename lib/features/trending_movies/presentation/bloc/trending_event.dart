@@ -19,16 +19,16 @@ class TrendingLoadMoreRequestedEvent extends TrendingEvent {
 }
 
 class TrendingTimeWindowChangedEvent extends TrendingEvent {
-  final TimeWindow timeWindow;
   const TrendingTimeWindowChangedEvent(this.timeWindow);
+  final TimeWindow timeWindow;
 
   @override
   List<Object?> get props => <Object?>[timeWindow];
 }
 
 class TrendingCastRequestedEvent extends TrendingEvent {
-  final int movieId;
   const TrendingCastRequestedEvent(this.movieId);
+  final int movieId;
 
   @override
   List<Object?> get props => <Object?>[movieId];

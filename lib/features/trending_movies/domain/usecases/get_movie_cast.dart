@@ -1,16 +1,16 @@
-import '../../../../core/result/result.dart';
-import '../../../../core/usecases/usecase.dart';
-import '../entities/cast_member.dart';
-import '../repositories/trending_repository.dart';
+import 'package:cine_parker/core/result/result.dart';
+import 'package:cine_parker/core/usecases/usecase.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/cast_member.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
 
 class GetMovieCastParams {
-  final int movieId;
   const GetMovieCastParams(this.movieId);
+  final int movieId;
 }
 
 class GetMovieCastUseCase implements UseCase<Result<List<CastMember>>, GetMovieCastParams> {
-  final TrendingRepository repository;
   GetMovieCastUseCase(this.repository);
+  final TrendingRepository repository;
 
   @override
   Future<Result<List<CastMember>>> call(GetMovieCastParams params) {

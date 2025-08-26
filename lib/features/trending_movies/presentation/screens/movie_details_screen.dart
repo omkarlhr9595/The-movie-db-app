@@ -1,23 +1,20 @@
-import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cine_parker/core/config/api_config.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/cast_cubit.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/cast_member.dart';
-import '../bloc/cast_cubit.dart';
-
-import '../../../../core/config/api_config.dart';
-import '../../domain/entities/movie.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
+  const MovieDetailsScreen({required this.movie, super.key});
   static const String routeName = 'MovieDetailsScreen';
-
-  const MovieDetailsScreen({super.key, required this.movie});
 
   final Movie movie;
 
   @override
   Widget build(BuildContext context) {
-    final String? backdrop = movie.backdropPath == null ? null : (ApiConfig.imageBaseUrlOriginal + movie.backdropPath!);
-    final String? poster = movie.posterPath == null ? null : (ApiConfig.imageBaseUrlW500 + movie.posterPath!);
+    final backdrop = movie.backdropPath == null ? null : (ApiConfig.imageBaseUrlOriginal + movie.backdropPath!);
+    final poster = movie.posterPath == null ? null : (ApiConfig.imageBaseUrlW500 + movie.posterPath!);
     context.read<CastCubit>().load(movie.id);
     return Scaffold(
       body: CustomScrollView(
@@ -42,7 +39,7 @@ class MovieDetailsScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment(0, .5),
-                        end: Alignment(0, 1),
+                        end: Alignment.bottomCenter,
                         colors: <Color>[Colors.transparent, Colors.black54],
                       ),
                     ),
@@ -67,45 +64,47 @@ class MovieDetailsScreen extends StatelessWidget {
                             tag: 'poster_${movie.id}_${movie.hashCode}',
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.of(context).push(PageRouteBuilder(
-                                  opaque: false,
-                                  barrierDismissible: true,
-                                  barrierColor: Colors.black54,
-                                  pageBuilder: (ctx, _, __) {
-                                    final Size size = MediaQuery.of(ctx).size;
-                                    final double maxW = size.width * 0.9;
-                                    final double maxH = size.height * 0.9;
-                                    return GestureDetector(
-                                      onTap: () => Navigator.of(ctx).pop(),
-                                      onVerticalDragEnd: (DragEndDetails details) {
-                                        final double? velocity = details.primaryVelocity;
-                                        if (velocity != null && velocity > 250) {
-                                          Navigator.of(ctx).pop();
-                                        }
-                                      },
-                                      child: Center(
-                                        child: ConstrainedBox(
-                                          constraints: BoxConstraints(
-                                            maxWidth: maxW,
-                                            maxHeight: maxH,
-                                          ),
-                                          child: Hero(
-                                            tag: 'poster_${movie.id}_${movie.hashCode}',
-                                            child: InteractiveViewer(
-                                              minScale: 0.5,
-                                              maxScale: 5,
-                                              child: CachedNetworkImage(
-                                                imageUrl: poster,
-                                                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                                errorWidget: (context, url, error) => const Center(child: Icon(Icons.broken_image_outlined, color: Colors.white)),
+                                Navigator.of(context).push(
+                                  PageRouteBuilder<dynamic>(
+                                    opaque: false,
+                                    barrierDismissible: true,
+                                    barrierColor: Colors.black54,
+                                    pageBuilder: (ctx, _, __) {
+                                      final size = MediaQuery.of(ctx).size;
+                                      final maxW = size.width * 0.9;
+                                      final maxH = size.height * 0.9;
+                                      return GestureDetector(
+                                        onTap: () => Navigator.of(ctx).pop(),
+                                        onVerticalDragEnd: (DragEndDetails details) {
+                                          final velocity = details.primaryVelocity;
+                                          if (velocity != null && velocity > 250) {
+                                            Navigator.of(ctx).pop();
+                                          }
+                                        },
+                                        child: Center(
+                                          child: ConstrainedBox(
+                                            constraints: BoxConstraints(
+                                              maxWidth: maxW,
+                                              maxHeight: maxH,
+                                            ),
+                                            child: Hero(
+                                              tag: 'poster_${movie.id}_${movie.hashCode}',
+                                              child: InteractiveViewer(
+                                                minScale: 0.5,
+                                                maxScale: 5,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: poster,
+                                                  placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                                                  errorWidget: (context, url, error) => const Center(child: Icon(Icons.broken_image_outlined, color: Colors.white)),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ));
+                                      );
+                                    },
+                                  ),
+                                );
                               },
                               child: CachedNetworkImage(
                                 imageUrl: poster,
@@ -132,11 +131,13 @@ class MovieDetailsScreen extends StatelessWidget {
                           children: <Widget>[
                             Text(movie.title, style: Theme.of(context).textTheme.titleLarge),
                             const SizedBox(height: 8),
-                            Row(children: <Widget>[
-                              const Icon(Icons.star_rounded, color: Colors.amber),
-                              const SizedBox(width: 4),
-                              Text((movie.voteAverage ?? 0).toStringAsFixed(1)),
-                            ]),
+                            Row(
+                              children: <Widget>[
+                                const Icon(Icons.star_rounded, color: Colors.amber),
+                                const SizedBox(width: 4),
+                                Text((movie.voteAverage ?? 0).toStringAsFixed(1)),
+                              ],
+                            ),
                             if (movie.releaseDate != null) ...<Widget>[
                               const SizedBox(height: 8),
                               Text('Release: ${movie.releaseDate!}'),
@@ -163,7 +164,7 @@ class MovieDetailsScreen extends StatelessWidget {
                         child: Center(child: CircularProgressIndicator()),
                       );
                     }
-                    final List<CastMember> cast = castState.cast;
+                    final cast = castState.cast;
                     if (cast.isEmpty) return const SizedBox.shrink();
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,15 +181,14 @@ class MovieDetailsScreen extends StatelessWidget {
                             itemCount: cast.length,
                             separatorBuilder: (_, __) => const SizedBox(width: 12),
                             itemBuilder: (BuildContext context, int index) {
-                              final CastMember person = cast[index];
-                              final String? profilePath = person.profilePath;
-                              final String name = person.name;
-                              final String character = person.character;
-                              final String? profileUrl = profilePath == null ? null : (ApiConfig.imageBaseUrlW500 + profilePath);
+                              final person = cast[index];
+                              final profilePath = person.profilePath;
+                              final name = person.name;
+                              final character = person.character;
+                              final profileUrl = profilePath == null ? null : (ApiConfig.imageBaseUrlW500 + profilePath);
                               return SizedBox(
                                 width: 110,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     SizedBox(
                                       height: 150,
@@ -240,4 +240,3 @@ class MovieDetailsScreen extends StatelessWidget {
     );
   }
 }
-

@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../domain/repositories/trending_repository.dart';
-import '../../models/movie_model.dart';
 
 abstract class TrendingLocalDataSource {
   Future<void> cacheTrendingMovies(
@@ -20,10 +19,10 @@ abstract class TrendingLocalDataSource {
 }
 
 class TrendingLocalDataSourceImpl implements TrendingLocalDataSource {
-  static const String _prefix = 'trending_cache_';
-  final SharedPreferences prefs;
 
   TrendingLocalDataSourceImpl(this.prefs);
+  static const String _prefix = 'trending_cache_';
+  final SharedPreferences prefs;
 
   String _key(TimeWindow window, int page) => '$_prefix${window.name}_$page';
   String _tsKey(TimeWindow window, int page) => '${_key(window, page)}_ts';
@@ -44,15 +43,15 @@ class TrendingLocalDataSourceImpl implements TrendingLocalDataSource {
     int page, {
     Duration maxAge = const Duration(minutes: 10),
   }) async {
-    final int? ts = prefs.getInt(_tsKey(timeWindow, page));
+    final ts = prefs.getInt(_tsKey(timeWindow, page));
     if (ts == null) return null;
-    final bool fresh = DateTime.now().millisecondsSinceEpoch - ts < maxAge.inMilliseconds;
+    final fresh = DateTime.now().millisecondsSinceEpoch - ts < maxAge.inMilliseconds;
     if (!fresh) return null;
-    final String? raw = prefs.getString(_key(timeWindow, page));
+    final raw = prefs.getString(_key(timeWindow, page));
     if (raw == null) return null;
     try {
-      final List<dynamic> list = jsonDecode(raw) as List<dynamic>;
-      final List<MovieModel> models = list.whereType<Map<String, dynamic>>().map<MovieModel>((Map<String, dynamic> e) => MovieModel.fromJson(e)).toList(growable: false);
+      final list = jsonDecode(raw) as List<dynamic>;
+      final models = list.whereType<Map<String, dynamic>>().map<MovieModel>(MovieModel.fromJson).toList(growable: false);
       return models;
     } catch (_) {
       return null;
