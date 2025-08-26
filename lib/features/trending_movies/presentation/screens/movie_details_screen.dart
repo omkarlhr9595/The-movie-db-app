@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cine_parker/core/config/api_config.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/cast_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:the_movie_app/core/config/api_config.dart';
-import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/bloc/cast_cubit.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   const MovieDetailsScreen({required this.movie, super.key});

@@ -1,8 +1,7 @@
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/trending_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/bloc/trending_bloc.dart';
 
 class TimeWindowSegmented extends StatelessWidget {
   const TimeWindowSegmented({super.key});

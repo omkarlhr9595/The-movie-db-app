@@ -1,8 +1,8 @@
+import 'package:cine_parker/core/error/exceptions.dart';
+import 'package:cine_parker/core/network/dio_client.dart';
+import 'package:cine_parker/features/search_movies/data/datasources/local/search_local_data_source.dart';
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
 import 'package:dio/dio.dart';
-import 'package:the_movie_app/core/error/exceptions.dart';
-import 'package:the_movie_app/core/network/dio_client.dart';
-import 'package:the_movie_app/features/search_movies/data/datasources/local/search_local_data_source.dart';
-import 'package:the_movie_app/features/trending_movies/data/models/movie_model.dart';
 
 abstract class SearchRemoteDataSource {
   Future<List<MovieModel>> searchMovies({required String query, required int page});

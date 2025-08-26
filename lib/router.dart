@@ -1,10 +1,10 @@
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
+import 'package:cine_parker/features/trending_movies/presentation/screens/movie_details_screen.dart';
+import 'package:cine_parker/features/trending_movies/presentation/screens/trending_screen.dart' show TrendingScreen;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/screens/movie_details_screen.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/screens/trending_screen.dart' show TrendingScreen;
 
-/// Router configuration for the movie app
+/// Router configuration for Cine Parker
 class AppRouter {
   /// Global navigator key for the root navigator
   static final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');

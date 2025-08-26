@@ -1,7 +1,7 @@
-import 'package:the_movie_app/core/result/result.dart';
-import 'package:the_movie_app/core/usecases/usecase.dart';
-import 'package:the_movie_app/features/trending_movies/domain/entities/cast_member.dart';
-import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
+import 'package:cine_parker/core/result/result.dart';
+import 'package:cine_parker/core/usecases/usecase.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/cast_member.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
 
 class GetMovieCastParams {
   const GetMovieCastParams(this.movieId);

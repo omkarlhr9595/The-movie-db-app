@@ -1,11 +1,11 @@
-import 'package:the_movie_app/core/error/exceptions.dart';
-import 'package:the_movie_app/core/error/failures.dart';
-import 'package:the_movie_app/core/result/result.dart';
-import 'package:the_movie_app/features/search_movies/data/datasources/local/search_local_data_source.dart';
-import 'package:the_movie_app/features/search_movies/data/datasources/remote/search_remote_data_source.dart';
-import 'package:the_movie_app/features/search_movies/domain/repositories/search_repository.dart';
-import 'package:the_movie_app/features/trending_movies/data/models/movie_model.dart';
-import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
+import 'package:cine_parker/core/error/exceptions.dart';
+import 'package:cine_parker/core/error/failures.dart';
+import 'package:cine_parker/core/result/result.dart';
+import 'package:cine_parker/features/search_movies/data/datasources/local/search_local_data_source.dart';
+import 'package:cine_parker/features/search_movies/data/datasources/remote/search_remote_data_source.dart';
+import 'package:cine_parker/features/search_movies/domain/repositories/search_repository.dart';
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
   SearchRepositoryImpl(this.remote, this.local);

@@ -1,9 +1,8 @@
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
+import 'package:cine_parker/features/trending_movies/domain/usecases/get_trending_movies.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
-import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
-import 'package:the_movie_app/features/trending_movies/domain/usecases/get_trending_movies.dart';
 
 part 'trending_event.dart';
 part 'trending_state.dart';

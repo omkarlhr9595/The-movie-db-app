@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:cine_parker/features/search_movies/presentation/bloc/search_bloc.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/trending_bloc.dart';
+import 'package:cine_parker/features/trending_movies/presentation/widgets/movie_card.dart';
+import 'package:cine_parker/features/trending_movies/presentation/widgets/time_window_segmented.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:the_movie_app/features/search_movies/presentation/bloc/search_bloc.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/bloc/trending_bloc.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/widgets/movie_card.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/widgets/time_window_segmented.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
 class TrendingScreen extends StatefulWidget {

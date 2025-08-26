@@ -1,5 +1,5 @@
-name: the_movie_app
-description: "A new Flutter project."
+name: cine_parker
+description: "Cine Parker is a movie app that allows you to browse and log your favorite movies."
 publish_to: "none"
 version: 0.1.0
 

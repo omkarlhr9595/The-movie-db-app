@@ -1,7 +1,6 @@
+import 'package:cine_parker/core/config/api_config.dart';
+import 'package:cine_parker/core/error/exceptions.dart';
 import 'package:dio/dio.dart';
-
-import 'package:the_movie_app/core/config/api_config.dart';
-import 'package:the_movie_app/core/error/exceptions.dart';
 
 class DioClient {
   DioClient() {

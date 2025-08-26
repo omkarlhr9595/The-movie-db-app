@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:the_movie_app/features/trending_movies/data/models/movie_model.dart';
-import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
 
 abstract class TrendingLocalDataSource {
   Future<void> cacheTrendingMovies(

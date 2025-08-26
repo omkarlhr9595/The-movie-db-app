@@ -1,4 +1,4 @@
-import 'package:the_movie_app/features/trending_movies/domain/entities/cast_member.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/cast_member.dart';
 
 class CastMemberModel {
   const CastMemberModel({

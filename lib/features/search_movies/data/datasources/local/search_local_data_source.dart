@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:the_movie_app/features/trending_movies/data/models/movie_model.dart';
 
 abstract class SearchLocalDataSource {
   Future<void> cacheSearchResults(String query, int page, List<Map<String, dynamic>> rawMovies);

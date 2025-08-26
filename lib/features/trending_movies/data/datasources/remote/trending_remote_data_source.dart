@@ -1,10 +1,10 @@
+import 'package:cine_parker/core/error/exceptions.dart';
+import 'package:cine_parker/core/network/dio_client.dart';
+import 'package:cine_parker/features/trending_movies/data/datasources/local/trending_local_data_source.dart';
+import 'package:cine_parker/features/trending_movies/data/models/cast_member_model.dart';
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
 import 'package:dio/dio.dart';
-import 'package:the_movie_app/core/error/exceptions.dart';
-import 'package:the_movie_app/core/network/dio_client.dart';
-import 'package:the_movie_app/features/trending_movies/data/datasources/local/trending_local_data_source.dart';
-import 'package:the_movie_app/features/trending_movies/data/models/cast_member_model.dart';
-import 'package:the_movie_app/features/trending_movies/data/models/movie_model.dart';
-import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
 
 /// Abstract class for the trending remote data source
 abstract class TrendingRemoteDataSource {

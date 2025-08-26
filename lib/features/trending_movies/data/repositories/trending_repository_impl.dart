@@ -1,12 +1,12 @@
-import 'package:the_movie_app/core/error/exceptions.dart';
-import 'package:the_movie_app/core/error/failures.dart';
-import 'package:the_movie_app/core/result/result.dart';
-import 'package:the_movie_app/features/trending_movies/data/datasources/local/trending_local_data_source.dart';
-import 'package:the_movie_app/features/trending_movies/data/datasources/remote/trending_remote_data_source.dart';
-import 'package:the_movie_app/features/trending_movies/data/models/movie_model.dart';
-import 'package:the_movie_app/features/trending_movies/domain/entities/cast_member.dart';
-import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
-import 'package:the_movie_app/features/trending_movies/domain/repositories/trending_repository.dart';
+import 'package:cine_parker/core/error/exceptions.dart';
+import 'package:cine_parker/core/error/failures.dart';
+import 'package:cine_parker/core/result/result.dart';
+import 'package:cine_parker/features/trending_movies/data/datasources/local/trending_local_data_source.dart';
+import 'package:cine_parker/features/trending_movies/data/datasources/remote/trending_remote_data_source.dart';
+import 'package:cine_parker/features/trending_movies/data/models/movie_model.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/cast_member.dart';
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
+import 'package:cine_parker/features/trending_movies/domain/repositories/trending_repository.dart';
 
 class TrendingRepositoryImpl implements TrendingRepository {
   TrendingRepositoryImpl(this.remoteDataSource, this.localDataSource);

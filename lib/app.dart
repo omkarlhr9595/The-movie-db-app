@@ -1,12 +1,12 @@
+import 'package:cine_parker/features/search_movies/presentation/bloc/search_bloc.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/cast_cubit.dart';
+import 'package:cine_parker/features/trending_movies/presentation/bloc/trending_bloc.dart';
+import 'package:cine_parker/injection_container.dart';
+import 'package:cine_parker/router.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:the_movie_app/features/search_movies/presentation/bloc/search_bloc.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/bloc/cast_cubit.dart';
-import 'package:the_movie_app/features/trending_movies/presentation/bloc/trending_bloc.dart';
-import 'package:the_movie_app/injection_container.dart';
-import 'package:the_movie_app/router.dart';
 
 /// Main app widget
 class App extends StatelessWidget {

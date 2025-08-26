@@ -1,8 +1,8 @@
+import 'package:cine_parker/features/trending_movies/domain/entities/cast_member.dart';
+import 'package:cine_parker/features/trending_movies/domain/usecases/get_movie_cast.dart';
+import 'package:cine_parker/injection_container.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:the_movie_app/features/trending_movies/domain/entities/cast_member.dart';
-import 'package:the_movie_app/features/trending_movies/domain/usecases/get_movie_cast.dart';
-import 'package:the_movie_app/injection_container.dart';
 
 part 'cast_state.dart';
 

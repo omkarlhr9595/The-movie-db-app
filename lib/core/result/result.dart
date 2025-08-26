@@ -1,4 +1,4 @@
-import 'package:the_movie_app/core/error/failures.dart';
+import 'package:cine_parker/core/error/failures.dart';
 
 abstract class Result<T> {
   const Result();

@@ -1,6 +1,5 @@
+import 'package:cine_parker/features/trending_movies/domain/entities/movie.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'package:the_movie_app/features/trending_movies/domain/entities/movie.dart';
 
 part 'movie_model.g.dart';
 
